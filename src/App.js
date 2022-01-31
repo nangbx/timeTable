@@ -26,10 +26,12 @@ function App() {
 			>
 				<ExportCSV />
 				<Input />
+				
 			</Stack>
 			<Stack direction='row' spacing={2}>
 				<List />
 				<Calendar />
+				
 			</Stack>
 			
 			<ToastContainer />
