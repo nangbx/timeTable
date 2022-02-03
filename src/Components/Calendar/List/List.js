@@ -9,11 +9,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteSubject } from "../../../Redux/Actions";
-import { addClass } from "../../../Redux/Actions";
+import { addView, deleteSubject } from "../../../Redux/Actions";
+import { addClass, removeView } from "../../../Redux/Actions";
 import ArticleIcon from "@mui/icons-material/Article";
 
 export default function List() {
+	const [open, setOpen] = useState(false);
 	const dispatch = useDispatch();
 	const { registration, subjects } = useSelector((state) => state.tkb);
 	const [disable, setDisable] = useState(false);
@@ -26,13 +27,21 @@ export default function List() {
 	const handleHidden = () => {
 		setDisable(t => !t)
 	}
+	const handleShowClass = (item) => {
+		setOpen(prev => !prev);
+		if(!open){
+			dispatch(addView(item))
+		} else{
+			dispatch(removeView())
+		}
+	}
 	return (
 		<div>
 			<IconButton aria-label='delete' onClick={handleHidden}>
 				<ArticleIcon />
 			</IconButton>{" "}
 			{registration.map((item) => (
-				<Accordion key={item} sx={{ width: 300 }} hidden={disable}>
+				<Accordion key={item.Mã_HP} sx={{ width: 300 }} hidden={disable} >
 					<AccordionSummary
 						expandIcon={<ExpandMoreIcon />}
 						aria-controls='panel1a-content'
@@ -44,7 +53,7 @@ export default function List() {
 							alignItems='center'
 							spacing={2}
 						>
-							<Typography>{item}</Typography>
+							<Typography onClick={() => handleShowClass(item)}>{item}</Typography>
 							<IconButton
 								color='primary'
 								aria-label='upload picture'
@@ -57,8 +66,8 @@ export default function List() {
 					</AccordionSummary>
 					<AccordionDetails>
 						{subjects[item.substring(0, item.indexOf(":"))].map((sub) => (
-							<Typography key={sub} onClick={() => handleShowTime(sub)}>
-								{sub.Mã_lớp}
+							<Typography key={sub.Mã_lớp} onClick={() => handleShowTime(sub)}>
+								{`${sub.Mã_lớp}(${sub.Loại_lớp}): Thứ ${sub.Thứ} ${sub.Thời_gian}`}
 							</Typography>
 						))}
 					</AccordionDetails>

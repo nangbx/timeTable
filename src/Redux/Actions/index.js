@@ -16,6 +16,17 @@ export const addClass = (data) => ({
 	type: types.ADD_CLASS,
 	data: data
 })
+export const deleteClass = (data) => ({
+	type: types.DELETE_CLASS,
+	data: data
+})
+export const removeView = () => ({
+	type: types.REMOVE_VIEW
+})
+export const addView = (data) => ({
+	type: types.ADD_VIEW,
+	data: data
+})
 export const fetchData = (data) => (dispatch) => {
 	const courses = [];
 	const subjects = new Object();

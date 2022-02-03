@@ -2,10 +2,10 @@ import React from "react";
 import "./Calendar.scss";
 import Event from "./Event/Event";
 import { useDispatch,useSelector } from "react-redux";
-
+import ViewClass from "./ViewClass/ViewClass";
 export default function Calendar() {
 
-	const { Class } = useSelector(state => state.tkb)
+	const { Class, view } = useSelector(state => state.tkb)
 	return (
 		<div className='container'>
 			<div className='title'>Thời khóa biểu</div>
@@ -85,6 +85,11 @@ export default function Calendar() {
                 {
 					Class.map(item => (
 						<Event key={item.Mã_lớp} info = {item}/>
+					))
+				}
+				{
+					view.map(item => (
+						<ViewClass key={item.Mã_lớp} info={item}/>
 					))
 				}
 			</div>

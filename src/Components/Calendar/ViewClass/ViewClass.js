@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import "./Event.scss";
-import Avatar from "@mui/material/Avatar";
+import "../Event/Event.scss";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from "react-redux";
 import { deleteClass } from "../../../Redux/Actions";
+import { addClass, removeView } from "../../../Redux/Actions";
 
-export default function Event({ info }) {
+export default function ViewClass({ info }) {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
 	const dispatch = useDispatch();
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
+	const handleClick = () => {
+		dispatch(addClass(info))
+        dispatch(removeView())
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
@@ -44,7 +44,7 @@ export default function Event({ info }) {
 				gridColumn: (week + 1).toString(),
 				gridRowStart: (2 + hourStart - 6).toString(),
 				height: width.toString() + "px",
-				backgroundColor: "#52ab98",
+				backgroundColor: "#e1eedd",
 				position: "relative",
 				top: minStart.toString() + "px",
 			});
@@ -59,8 +59,8 @@ export default function Event({ info }) {
 				onClick={handleClick}
 				className='event event1 calendar1'
 				style={styleEvent}
-			>{`${info.Tên_HP} (${info.Tuần})`}</div>
-			<Menu
+			>{`${info.Mã_lớp} ${info.Tên_HP} (${info.Tuần})`}</div>
+			{/* <Menu
 				anchorEl={anchorEl}
 				id='account-menu'
 				open={open}
@@ -116,7 +116,7 @@ export default function Event({ info }) {
 				<MenuItem>
 					<Typography>Phòng: {info.Phòng}</Typography>
 				</MenuItem>
-			</Menu>
+			</Menu> */}
 		</React.Fragment>
 	);
 }
