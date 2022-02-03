@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addSubject } from "../../Redux/Actions";
+import { NotiSucess } from "../../Noti/Noti";
 
 const filter = createFilterOptions();
 
@@ -30,6 +31,7 @@ export default function Input() {
 						if (newValue) {
 							dispatch(addSubject(newValue));
 							setInputValue('')
+							NotiSucess(`Đã thêm học phần ${newValue}`)
 						}
 					}}
 					options={courses.map((option) => option)}

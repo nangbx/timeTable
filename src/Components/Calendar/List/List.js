@@ -12,6 +12,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addView, deleteSubject } from "../../../Redux/Actions";
 import { addClass, removeView } from "../../../Redux/Actions";
 import ArticleIcon from "@mui/icons-material/Article";
+import { NotiSucess } from "../../../Noti/Noti";
+
 
 export default function List() {
 	const [open, setOpen] = useState(false);
@@ -20,6 +22,7 @@ export default function List() {
 	const [disable, setDisable] = useState(false);
 	const handleDelete = (item) => {
 		dispatch(deleteSubject(item));
+		NotiSucess('Đã xóa học phần')
 	};
 	const handleShowTime = (sub) => {
 		dispatch(addClass(sub));
@@ -28,7 +31,6 @@ export default function List() {
 		setDisable(t => !t)
 	}
 	const handleShowClass = (item) => {
-		setOpen(prev => !prev);
 		if(!open){
 			dispatch(addView(item))
 		} else{
@@ -41,11 +43,12 @@ export default function List() {
 				<ArticleIcon />
 			</IconButton>{" "}
 			{registration.map((item) => (
-				<Accordion key={item.Mã_HP} sx={{ width: 300 }} hidden={disable} >
+				<Accordion key={item.Mã_HP} sx={{ width: 300 }} hidden={disable} onChange={() => setOpen(prev => !prev)} >
 					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
+						expandIcon={<ExpandMoreIcon onClick={() => handleShowClass(item)} />}
 						aria-controls='panel1a-content'
 						id='panel1a-header'
+						
 					>
 						<Stack
 							direction='row'
@@ -53,7 +56,7 @@ export default function List() {
 							alignItems='center'
 							spacing={2}
 						>
-							<Typography onClick={() => handleShowClass(item)}>{item}</Typography>
+							<Typography onClick={() => handleShowClass(item)} >{item}</Typography>
 							<IconButton
 								color='primary'
 								aria-label='upload picture'
